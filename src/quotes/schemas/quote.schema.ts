@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Balance, BalanceSchema } from "./balance.schema";
 
 export enum QuoteStatus {
     cot = 'C',
@@ -6,9 +7,9 @@ export enum QuoteStatus {
     desc = 'I'
 }
 
-@Schema()
+@Schema({timestamps: true})
 export class Quote {
-    @Prop({ required: true})
+    @Prop({ required: true, unique: true})
     N_offert: string;
 
     @Prop({ required: true}) 
@@ -50,12 +51,18 @@ export class Quote {
     @Prop({ required: true})
     phone: string;
 
-    // balances: ;
-    // weigths: ;
-    // services: ;
-    // products: ;
-    // comments: ;
-    // observations: ;
+    @Prop({ type: [BalanceSchema] })
+    balances: Balance[];
+
+    weigths: [];
+    
+    services: [];
+    
+    // products: [];
+    
+    // comments: [];
+    
+    // observations: [];
 
     @Prop()
     stock: string;

@@ -9,7 +9,7 @@ export class Service {
     @Prop({ required: true})
     cant: number;
     
-    @Prop({ required: true})
+    @Prop({ required: true, default: 0})
     disc: number;
     
     @Prop({ required: true})

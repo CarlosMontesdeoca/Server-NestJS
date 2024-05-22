@@ -13,22 +13,33 @@ export class QuotesService {
     async findByAdvisor(query: any) {
         const startDate = new Date(`${query.year}-01-01T00:00:00Z`);
         const endDate = new Date(`${query.year}-12-31T23:59:59Z`);
-        return this.quoteModel.find({
-            advisor: query.advisor ,
+
+        const filter: any = {
             $or: [
                 { updatedAt: { $gte: startDate, $lte: endDate } },
                 { state: 'C' }
             ]
-
-        }).exec();
+        }
+        query.advisor && (filter.advisor = query.advisor);
+        return this.quoteModel.find(filter).exec();
     }
 
     async findOne(value:string, query: any) {
-        const data = await this.quoteModel.find({
+        const data = await this.quoteModel.findOne({
             [query.key]: value
         }).exec();
     
-        return query.filter ? data.map(item => item[query.filter]).flat() : data;
+        return query.filter ? data[query.filter] : data;
+        // return query.filter ? data.map(item => item[query.filter]).flat() : data;
+    }
+
+    async findOneServices(value:string, query: any) {
+        const data = await this.quoteModel.findOne({
+            [query.key]: value
+        }).exec();
+    
+        return [data.disc, data.services];
+        // return query.filter ? data.map(item => item[query.filter]).flat() : data;
     }
 
     async findByYear() {

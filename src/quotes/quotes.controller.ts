@@ -16,6 +16,11 @@ export class QuotesController {
     return this.quoteService.findOne(value, query);
   }
 
+  @Get(':value/services')
+  getQuoteServices(@Param('value') value: string, @Query() query: any ) {
+    return this.quoteService.findOneServices(value, query);
+  }
+
   @Post()
   async createQuote(@Body(new ValidationPipe()) createQuote: CreateQuoteDto) {
     return this.quoteService.create(createQuote);

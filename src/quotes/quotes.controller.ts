@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, ValidationPipe } from '@nestjs/common';
 import { QuotesService } from './quotes.service';
 import { CreateQuoteDto } from './dto/createQuoteDto.dto';
 
@@ -7,8 +7,13 @@ export class QuotesController {
   constructor(private quoteService: QuotesService) {}
 
   @Get()
-  getQuotesByAdvisor() {
-    return this.quoteService.findByAdvisor();
+  getQuotesByAdvisor(@Query() query: any ) {
+    return this.quoteService.findByAdvisor(query);
+  }
+
+  @Get(':value')
+  getQuote(@Param('value') value: string, @Query() query: any ) {
+    return this.quoteService.findOne(value, query);
   }
 
   @Post()

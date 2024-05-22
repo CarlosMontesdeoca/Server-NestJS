@@ -1,9 +1,9 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString, IsEmail } from "class-validator";
 
 export class CreateQuoteDto {
-    @IsNotEmpty()
-    @IsString()
-    N_offert: string;
+    // @IsNotEmpty()
+    // @IsString()
+    // N_offert: string;
 
     // @Prop({ required: true}) 
     reference: string;
@@ -14,7 +14,7 @@ export class CreateQuoteDto {
     // @Prop({ required: true})
     phone_adv: string;  
 
-    // @Prop({ required: true})
+    @IsEmail()
     email_adv: string;
 
     // @Prop({ required: true})

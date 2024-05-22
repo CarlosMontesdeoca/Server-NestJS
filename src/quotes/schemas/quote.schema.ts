@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Balance, BalanceSchema } from "./balance.schema";
+import { Weigth, WeigthSchema } from "./weigth.schema";
+import { Service, ServiceSchema } from "./service.schema";
 
 export enum QuoteStatus {
     cot = 'C',
@@ -54,15 +56,16 @@ export class Quote {
     @Prop({ type: [BalanceSchema] })
     balances: Balance[];
 
-    weigths: [];
+    @Prop({ type: [WeigthSchema] })
+    weigths: Weigth[];
     
-    services: [];
+    @Prop({ type: [ServiceSchema] })
+    services: Service[];
     
-    // products: [];
+    products: [];
     
-    // comments: [];
-    
-    // observations: [];
+    @Prop()
+    comments: [];
 
     @Prop()
     stock: string;

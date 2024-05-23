@@ -13,22 +13,33 @@ export class QuotesService {
     async findByAdvisor(query: any) {
         const startDate = new Date(`${query.year}-01-01T00:00:00Z`);
         const endDate = new Date(`${query.year}-12-31T23:59:59Z`);
-        return this.quoteModel.find({
-            advisor: query.advisor ,
+
+        const filter: any = {
             $or: [
                 { updatedAt: { $gte: startDate, $lte: endDate } },
                 { state: 'C' }
             ]
-
-        }).exec();
+        }
+        query.advisor && (filter.advisor = query.advisor);
+        return this.quoteModel.find(filter).exec();
     }
 
     async findOne(value:string, query: any) {
-        const data = await this.quoteModel.find({
+        const data = await this.quoteModel.findOne({
             [query.key]: value
         }).exec();
     
-        return query.filter ? data.map(item => item[query.filter]).flat() : data;
+        return query.filter ? data[query.filter] : data;
+        // return query.filter ? data.map(item => item[query.filter]).flat() : data;
+    }
+
+    async findOneServices(value:string, query: any) {
+        const data = await this.quoteModel.findOne({
+            [query.key]: value
+        }).exec();
+    
+        return [data.disc, data.services];
+        // return query.filter ? data.map(item => item[query.filter]).flat() : data;
     }
 
     async findByYear() {
@@ -37,12 +48,29 @@ export class QuotesService {
 
     // crear una cotizacion
     async create(quote: any) {
-        const createdQuote = new this.quoteModel(quote);
-        return createdQuote.save();
+        const now = new Date();
+        const count = await this.quoteModel.countDocuments({
+            advisor: quote.advisor,
+            N_offert: { $regex: new RegExp(`${now.getFullYear()}`) },
+            pmp: quote.pmp ? true : false
+        }).exec();
+        const offert = `${quote.cod}-${(quote.pmp ? 'PMP-' : '') + quote.loc + now.getFullYear()}-${(count + 1).toString()
+            .padStart(3, "0")}`
+        quote.N_offert = offert;
+        return new this.quoteModel(quote).save();
     }
 
-    async update(quote: any) {
-        return 'actualizar';
+    async update(id: string, quote: any) {
+        return this.quoteModel.findByIdAndUpdate(id, 
+            { 
+                $set: quote,
+                $inc: { version: 1 }
+            }
+        ).exec();
+    }
+
+    async move(id: string, quote: any) {
+        return this.quoteModel.findByIdAndUpdate(id, quote).exec();
     }
 
     async delete() {

@@ -1,76 +1,88 @@
-import { IsNotEmpty, IsString, IsEmail } from "class-validator";
+import { IsNotEmpty, IsString, IsEmail, Min, IsNumber, IsBoolean } from "class-validator";
 
 export class CreateQuoteDto {
-    // @IsNotEmpty()
-    // @IsString()
-    // N_offert: string;
 
-    // @Prop({ required: true}) 
+    @IsString()
+    @IsNotEmpty()
     reference: string;
 
-    // @Prop({ required: true})
+    @IsString()
+    @IsNotEmpty()
     advisor: string; 
 
-    // @Prop({ required: true})
+    @IsString()
+    @IsNotEmpty()
     phone_adv: string;  
 
+    @IsString()
+    @IsNotEmpty()
     @IsEmail()
     email_adv: string;
 
-    // @Prop({ required: true})
+    @IsString()
+    @IsNotEmpty()
+    @Min(10)
     ruc: string; 
 
-    // @Prop({ required: true})
+    @IsString()
+    @IsNotEmpty()
     client: string;
 
-    // @Prop({ required: true})
+    @IsNumber()
+    @IsNotEmpty()
     id_plant: number;
 
-    // @Prop({ required: true})
+    @IsString()
+    @IsNotEmpty()
     plant: string; 
 
-    // @Prop({ required: true})
+    @IsString()
+    @IsNotEmpty()
     address: string;
 
-    // @Prop({ required: true})
+    @IsNumber()
+    @IsNotEmpty()
     id_contact: number;
 
-    // @Prop({ required: true})
+    @IsString()
+    @IsNotEmpty()
     contact: string;
 
-    // @Prop({ required: true})
+    @IsString()
+    @IsNotEmpty()
+    @IsEmail()
     email: string; 
 
-    // @Prop({ required: true})
+    @IsString()
+    @IsNotEmpty()
     phone: string;
     
-    // balances: ;
-    // // weigths: ;
-    // // services: ;
-    // // products: ;
-    // // comments: ;
-    // // observations: ;
+    balances?: [];
 
-    // @Prop()
+    weigths?: [];
+
+    @IsNotEmpty()
+    services: [];
+
+    products?: [];
+
+    comments?:  [];
+
+    @IsString()
+    @IsNotEmpty()
     stock: string;
 
-    // @Prop({ required: true})
+    @IsString()
+    @IsNotEmpty()
     pay: string;
 
-    // @Prop({ default: 0})
-    disc: number;
-
-    // @Prop({ default: 15})
-    validity: number;
-
-    // @Prop({ validity: 3})
+    @IsNumber()
+    disc?: number;
+ 
+    @IsNumber()
+    @IsNotEmpty()
     doc: number;
 
-    // @Prop({ default: false})
-    pmp: boolean;
-
-    // @Prop({ default: QuoteStatus.cot})
-
-    // @Prop({ default: 1})
-    version: number;
+    @IsBoolean()
+    pmp?: boolean;
 }

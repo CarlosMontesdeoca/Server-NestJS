@@ -10,7 +10,7 @@ export class Service {
     cant: number;
     
     @Prop({ required: true, default: 0})
-    disc: number;
+    mov_cost: number;
     
     @Prop({ required: true})
     cat: string;
@@ -20,6 +20,9 @@ export class Service {
     
     @Prop({ required: true})
     cost: number;
+
+    @Prop({ required: true})
+    mov: boolean;
 }
 
 export const ServiceSchema = SchemaFactory.createForClass(Service);

@@ -48,12 +48,20 @@ export class QuotesService {
 
     // crear una cotizacion
     async create(quote: any) {
-        const createdQuote = new this.quoteModel(quote);
-        return createdQuote.save();
+        const now = new Date();
+        const count = await this.quoteModel.countDocuments({
+            advisor: quote.advisor,
+            N_offert: { $regex: new RegExp(`${now.getFullYear()}`) },
+            pmp: quote.pmp ? true : false
+        }).exec();
+        const offert = `${quote.cod}-${(quote.pmp ? 'PMP-' : '') + quote.loc + now.getFullYear()}-${(count + 1).toString()
+            .padStart(3, "0")}`
+        quote.N_offert = offert;
+        return new this.quoteModel(quote).save();
     }
 
-    async update(quote: any) {
-        return 'actualizar';
+    async update(id: string, quote: any) {
+        return this.quoteModel.findOneAndUpdate({_id: id}, quote).exec();
     }
 
     async delete() {

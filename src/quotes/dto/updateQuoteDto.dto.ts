@@ -31,5 +31,4 @@ export class UpdateQuoteDto {
     @IsNumber()
     @IsNotEmpty()
     doc: number;
-
 }

@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post, Put, Query, ValidationPipe } from '
 import { QuotesService } from './quotes.service';
 import { CreateQuoteDto } from './dto/createQuoteDto.dto';
 import { UpdateQuoteDto } from './dto/updateQuoteDto.dto';
+import { UpdateQuoteStDto } from './dto/updateQuoteStDto.dto';
 
 @Controller('quotes')
 export class QuotesController { 
@@ -30,5 +31,10 @@ export class QuotesController {
   @Put('/:id')
   async updateQuote(@Param('id') id: string, @Body() updateQuote: UpdateQuoteDto ){
     return this.quoteService.update(id, updateQuote);
+  }
+
+  @Put('/move/:id')
+  async moveQuote(@Param('id') id: string, @Body() quote: UpdateQuoteStDto ){
+    return this.quoteService.move(id, quote);
   }
 }

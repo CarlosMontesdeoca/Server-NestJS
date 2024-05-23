@@ -61,7 +61,16 @@ export class QuotesService {
     }
 
     async update(id: string, quote: any) {
-        return this.quoteModel.findOneAndUpdate({_id: id}, quote).exec();
+        return this.quoteModel.findByIdAndUpdate(id, 
+            { 
+                $set: quote,
+                $inc: { version: 1 }
+            }
+        ).exec();
+    }
+
+    async move(id: string, quote: any) {
+        return this.quoteModel.findByIdAndUpdate(id, quote).exec();
     }
 
     async delete() {

@@ -3,9 +3,12 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 @Schema({ _id: false })
 export class Balance {
     @Prop()
+    codPrc: string;
+
+    @Prop()
     key: number;
     
-    @Prop({required: true})
+    @Prop()
     descBl: string; 
     
     @Prop({required: true})

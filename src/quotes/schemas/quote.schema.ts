@@ -54,8 +54,11 @@ export class Quote {
     @Prop({ required: true})
     phone: string;
 
-    @Prop({ type: [BalanceSchema] })
-    balances: Balance[];
+    // @Prop({ type: [BalanceSchema] })
+    // balances: Balance[];
+    
+    @Prop()
+    balances: [];
 
     @Prop({ type: [WeigthSchema] })
     weigths: Weigth[];

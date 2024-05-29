@@ -21,7 +21,7 @@ export class QuotesService {
             ]
         }
         query.advisor && (filter.advisor = query.advisor);
-        return this.quoteModel.find(filter).sort({ updatedAt: 1}).exec();
+        return this.quoteModel.find(filter).sort({ updatedAt: -1}).exec();
     }
 
     async findOne(value:string, query: any) {

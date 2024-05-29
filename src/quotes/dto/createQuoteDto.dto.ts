@@ -20,8 +20,7 @@ export class CreateQuoteDto {
     email_adv: string;
 
     @IsString()
-    @IsNotEmpty()
-    @Min(10)
+    // @IsNotEmpty()
     ruc: string; 
 
     @IsString()
@@ -68,8 +67,7 @@ export class CreateQuoteDto {
 
     comments?:  [];
 
-    @IsString()
-    @IsNotEmpty()
+    // @IsString()
     stock: string;
 
     @IsString()
@@ -79,9 +77,9 @@ export class CreateQuoteDto {
     @IsNumber()
     disc?: number;
  
-    @IsNumber()
-    @IsNotEmpty()
-    doc: number;
+    // @IsNumber()
+    // @IsNotEmpty()
+    // doc: number;
 
     @IsBoolean()
     pmp?: boolean;

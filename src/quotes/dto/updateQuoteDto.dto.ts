@@ -13,9 +13,9 @@ export class UpdateQuoteDto {
     @IsNotEmpty()
     services: [];
 
-    products?: [];
+    products: [];
 
-    comments?:  [];
+    comments:  [];
 
     @IsString()
     @IsNotEmpty()

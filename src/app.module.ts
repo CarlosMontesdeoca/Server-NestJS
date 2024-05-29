@@ -6,7 +6,7 @@ import { BiModule } from './bi/bi.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/operaciones'),
+    MongooseModule.forRoot('mongodb://192.168.9.221:27017/operaciones'),
     QuotesModule,
     BiModule
   ],

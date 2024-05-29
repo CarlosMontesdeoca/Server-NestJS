@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
 @Schema({ _id: false })
 export class Balance {
-    @Prop({required: true})
+    @Prop()
     key: number;
     
     @Prop({required: true})
@@ -11,6 +11,9 @@ export class Balance {
     @Prop({required: true})
     ident: string;
     
+    @Prop({default: 'N/A'})
+    loc: string;
+
     @Prop({required: true})
     tip: string;
     
@@ -20,7 +23,7 @@ export class Balance {
     @Prop({required: true})
     modl: string;
     
-    @Prop({required: true})
+    @Prop({default: 'III'})
     cls: string;
     
     @Prop({required: true})

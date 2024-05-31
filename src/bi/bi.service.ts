@@ -25,31 +25,25 @@ export class BiService {
             { updatedAt: { $gte: startDate, $lte: endDate } }
         ).exec();
 
-        return data.reduce((newData, obj) => {
-            const { N_offert, advisor, disc, services } = obj;
-            
-            services.forEach(serv => {
-                const newServ = { 
-                    ...serv,
-                    offert: N_offert,
-                    advisor: advisor,
-                    discount: disc
-                };
-                newData.push(newServ);
-            });
-            
-            return newData;
-        }, []);
-        // const getServices = data.flatMap(dt => 
-        //     dt.services.map(service => ({
-        //         ...service,
-        //         N_offert: dt.N_offert,
-        //         advisor: dt.advisor,
-        //         disc: dt.disc,
-        //         createdAt: dt
-        //     }))
-        // )
+        let resp = [];
 
-        // return getServices;
+        data.forEach(dt => {
+            dt.services.forEach( serv => {
+                let temp = {
+                    offert: dt.N_offert,
+                    advisor: dt.advisor,
+                    mov_cost: serv.mov_cost,
+                    cost: serv.cost,
+                    cant: serv.cant,
+                    disc: dt.disc,
+                    cat: serv.cat,
+                    service: serv.service,
+                    createdAt: (dt as any).createdAt,
+                    updatedAt: (dt as any).updatedAt
+                }
+                resp.push(temp)
+            })
+        });
+        return resp;
     }
 }

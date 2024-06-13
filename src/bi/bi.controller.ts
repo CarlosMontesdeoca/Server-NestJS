@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { BiService } from './bi.service';
 
 @Controller('bi')
@@ -13,5 +13,10 @@ export class BiController {
     @Get('/servicios/:year')
     getServices(@Param('year') year: string) {
         return this.biService.getServices(year);
+    }
+
+    @Get('/servicios')
+    getServicesFilter(@Query() query: any) {
+        return this.biService.getServicesFilter(query);
     }
 }

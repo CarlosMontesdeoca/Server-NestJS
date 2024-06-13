@@ -25,11 +25,23 @@ export class QuotesService {
     }
 
     async findOne(value:string, query: any) {
+        // return query;
         const data = await this.quoteModel.findOne({
             [query.key]: value
         }).exec();
     
-        return query.filter ? data[query.filter] : data;
+        if (query.filter) {
+            let temp = {}
+            query.filter.split(',').forEach(k  => {
+                // console.log(data)
+                // console.log(data[k])
+                temp[k] = data[k]
+            });
+            return temp
+            // data[query.filter]
+        }else {
+            return data
+        };
         // return query.filter ? data.map(item => item[query.filter]).flat() : data;
     }
 
@@ -61,7 +73,6 @@ export class QuotesService {
     }
 
     async update(id: string, quote: any) {
-        console.log(':V')
         return this.quoteModel.findByIdAndUpdate(id, 
             { 
                 $set: quote,

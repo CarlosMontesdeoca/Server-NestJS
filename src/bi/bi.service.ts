@@ -13,7 +13,8 @@ export class BiService {
         const startDate = new Date(`${year}-01-01T00:00:00Z`);
         const endDate = new Date(`${year}-12-31T23:59:59Z`);
         return this.quoteModel.find(
-            { updatedAt: { $gte: startDate, $lte: endDate } }
+            { updatedAt: { $gte: startDate, $lte: endDate } },
+            'N_offert disc pmp advisor ruc client plant address contact email phone services products pay state version createdAt updatedAt'
         ).exec();
     }
 

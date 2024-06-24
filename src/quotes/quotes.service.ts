@@ -25,7 +25,6 @@ export class QuotesService {
     }
 
     async findOne(value:string, query: any) {
-        // return query;
         const data = await this.quoteModel.findOne({
             [query.key]: value
         }).exec();
@@ -33,16 +32,12 @@ export class QuotesService {
         if (query.filter) {
             let temp = {}
             query.filter.split(',').forEach(k  => {
-                // console.log(data)
-                // console.log(data[k])
-                temp[k] = data[k]
+                temp[k] = data[k] ?? 'not found'
             });
             return temp
-            // data[query.filter]
         }else {
             return data
         };
-        // return query.filter ? data.map(item => item[query.filter]).flat() : data;
     }
 
     async findOneServices(value:string, query: any) {

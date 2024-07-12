@@ -11,17 +11,27 @@ export class QuotesService {
 
     // obtener cotizaciones de un asesor
     async findByAdvisor(query: any) {
-        const startDate = new Date(`${query.year}-01-01T00:00:00Z`);
-        const endDate = new Date(`${query.year}-12-31T23:59:59Z`);
+        // return query
+        try {
+            const startDate = new Date(`${query.year}-01-01T00:00:00Z`);
+            const endDate = new Date(`${query.year}-12-31T23:59:59Z`);
 
-        const filter: any = {
-            $or: [
-                { updatedAt: { $gte: startDate, $lte: endDate } },
-                { state: 'C' }
-            ]
+            const filter: any = {
+                $or: [
+                    { updatedAt: { $gte: startDate, $lte: endDate } },
+                    { state: 'C' }
+                ]
+            }
+            
+            if (query.advisor) {
+                filter.advisor = query.advisor;
+                return this.quoteModel.find(filter).sort({ updatedAt: -1}).exec();
+            } else {
+                return this.quoteModel.find(filter).exec();
+            }
+        } catch (error) {
+            return query
         }
-        query.advisor && (filter.advisor = query.advisor);
-        return this.quoteModel.find(filter).sort({ updatedAt: -1}).exec();
     }
 
     async findOne(value:string, query: any) {

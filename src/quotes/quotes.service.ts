@@ -23,19 +23,16 @@ export class QuotesService {
                 ]
             }
             
-            if (query.advisor) {
-                filter.advisor = query.advisor;
-                return this.quoteModel.find(filter).sort({ updatedAt: -1}).exec();
-            } else {
-                return this.quoteModel.find(filter).exec();
-            }
+            query.advisor && (filter.advisor = query.advisor);
+            return this.quoteModel.find(filter,
+                '_id N_offert reference client plant createdAt updatedAt state'
+            ).sort({ updatedAt: -1}).exec();
         } catch (error) {
             return query
         }
     }
 
     async findOne(value:string, query: any) {
-        // return query;
         const data = await this.quoteModel.findOne({
             [query.key]: value
         }).exec();
@@ -43,16 +40,12 @@ export class QuotesService {
         if (query.filter) {
             let temp = {}
             query.filter.split(',').forEach(k  => {
-                // console.log(data)
-                // console.log(data[k])
-                temp[k] = data[k]
+                temp[k] = data[k] ?? 'not found'
             });
             return temp
-            // data[query.filter]
         }else {
             return data
         };
-        // return query.filter ? data.map(item => item[query.filter]).flat() : data;
     }
 
     async findOneServices(value:string, query: any) {

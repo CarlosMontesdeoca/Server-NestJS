@@ -12,9 +12,20 @@ export class BiService {
     async getQuotes(year: string) {
         const startDate = new Date(`${year}-01-01T00:00:00Z`);
         const endDate = new Date(`${year}-12-31T23:59:59Z`);
-        return this.quoteModel.find(
-            { updatedAt: { $gte: startDate, $lte: endDate } }
+        const quotes = await this.quoteModel.find(
+            { updatedAt: { $gte: startDate, $lte: endDate } },
+            'N_offert disc pmp advisor ruc client plant address contact email phone services products pay state version createdAt updatedAt'
         ).exec();
+
+        const mergedQuotes = quotes.map(quote => {
+            const { products, services, ...rest } = quote.toObject();
+            return {
+                ...rest,
+                services: [...products, ...services]
+            };
+        });
+
+        return mergedQuotes;
     }
 
     async getServices(year: string) {
